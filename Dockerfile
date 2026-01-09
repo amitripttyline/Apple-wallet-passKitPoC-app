@@ -6,6 +6,7 @@ WORKDIR /app
 # Copy all source code
 COPY pom.xml .
 COPY src ./src
+COPY certs ./certs
 
 # Build the application (skip tests for faster builds)
 RUN mvn clean package -DskipTests -Dmaven.test.skip=true
@@ -21,14 +22,17 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 # Copy jar from build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Create directory for certificates (will be mounted as volume)
-RUN mkdir -p /app/certs && chown -R appuser:appgroup /app
+# Copy certificates from build stage
+COPY --from=build /app/certs ./certs
+
+# Create directory for certificates (ensure permissions)
+RUN chown -R appuser:appgroup /app
 
 # Switch to non-root user
 USER appuser
 
 # Expose port
-EXPOSE 8080
+EXPOSE 8888
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \

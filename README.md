@@ -1,3 +1,7 @@
+This application is a Spring Boot–based Apple Wallet pass platform that generates, signs, and delivers multiple pass types—Generic, Boarding Pass, Coupon, Event Ticket, and Store Card—using a single, unified backend. It exposes REST APIs that accept pass data, dynamically builds Apple-compliant `pass.json` based on the requested pass type, signs it with Apple Pass Type certificates, packages it into a `.pkpass` file, and serves it to iOS devices for direct addition to Apple Wallet. The same integration also supports pass updates and expiration through Apple’s web service APIs, enabling real-time changes such as balance updates, boarding gate changes, or offer expiry, all without requiring users to reinstall the pass.
+
+
+
 # Apple PassKit – Backend Setup & Configuration
 
 This document explains **end-to-end setup, configuration, and verification** required to generate and sign Apple Wallet (`.pkpass`) files from a backend service.
